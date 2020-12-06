@@ -1,14 +1,25 @@
 .container {
     width: 12000px;
 
-    #waveform {
+    .actions-container {
         position: sticky;
         top: 0;
+        left: 0;
+        display: inline-block;
+        button {
+            width: 100px;
+            height: 40px;
+        }
+    }
+
+    #waveform {
+        position: sticky;
+        top: 40px;
         background: white;
     }
     #wave-timeline {
         position: sticky;
-        top: 128px;
+        top: 148px;
         background: white;
     }
 
@@ -19,6 +30,7 @@
             height: 50px;
             display: flex;
             justify-content: space-evenly;
+            user-select: none;
             .frame { 
                 outline: 1px solid rgba(128, 128, 128, 0.178);
                 background-color: #fff;
