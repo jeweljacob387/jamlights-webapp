@@ -6,7 +6,7 @@ export const groups: Array<Group> = [
             {
                 name: 'channel1',
                 isPWM: true,
-                color: '#ff00ff'
+                color: '#ff0000'
             },
             {
                 name: 'channel2',
