@@ -1,21 +1,23 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, Component, NgZone } from '@angular/core';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
-import { saveAs } from 'file-saver';
 
 import { groups, Channel } from 'src/assets/configs/channels.config';
-import * as frames from '../assets/frames/frames.json';
+import { FileServiceService } from './file-service.service';
+import { FrameData } from './app.module';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    providers: [FileServiceService]
 })
 export class AppComponent implements AfterViewInit {
     wave: WaveSurfer = null;
     url = 'assets/audiofiles/audio.mp3';
 
     duration: number;
-    frameCount: Array<number>;
+    frameCount: number;
     frameWidth: number;
 
     startIndex: number = null;
@@ -23,7 +25,29 @@ export class AppComponent implements AfterViewInit {
     selectedGroupIndex: any;
 
     groups = groups;
-    frameData: { name: string; nodes: { name: string; color: string; frameSates: any[]; }[]; }[];
+    frameData: FrameData;
+    isDragging: boolean;
+    playing: boolean;
+
+    constructor(
+        private file: FileServiceService,
+        protected zone: NgZone
+    ) {
+        zone.runOutsideAngular(
+            () => {
+                window.addEventListener(
+                    'keypress',
+                    (event: KeyboardEvent) => {
+                        if (event.code === 'KeyS') {
+                            this.saveData();
+                            console.log('saveee');
+
+                        }
+                    }
+                );
+            }
+        );
+    }
 
     ngAfterViewInit() {
         this.initWaveCreation();
@@ -37,15 +61,26 @@ export class AppComponent implements AfterViewInit {
                 }
             );
         }
-        setTimeout(() => {
+        this.wave.on('pause', () => { this.playing = false; });
+        this.wave.on('play', () => { this.playing = true; });
+        this.getFrames();
+        this.wave.on('ready', () => {
             this.duration = this.wave.getDuration();
-            this.frameCount = new Array(Math.floor(this.duration * 1000 / 20)).fill(1);
-            this.frameWidth = 12000 / this.frameCount.length;
+            this.frameCount = Math.floor(this.duration * 1000 / 40);
+            this.frameWidth = 12000 / this.frameCount;
             // this.createFrameData();
-            this.frameData = frames.frames;
-        }, 1000);
-
+            // this.frameData = frames.frames;
+        });
     }
+
+    getFrames() {
+        this.file.getFrames().then(
+            (frames) => {
+                this.frameData = frames;
+            }
+        );
+    }
+
     createLoadCanvas() {
         return new Promise(
             (resolve) => {
@@ -65,28 +100,18 @@ export class AppComponent implements AfterViewInit {
     }
 
 
-
-    onPlayPressed(): void {
-        this.wave.play();
-    }
-
-    onStopPressed(): void {
-        this.wave.stop();
-    }
-
     createFrameData() {
         this.frameData = groups.map(
             (group) => ({
                 name: group.name,
                 nodes: this.createNodeData(group.nodes)
-            }
-            )
+            })
         );
     }
 
     createNodeData = (nodes: Array<Channel>) => {
         return nodes.map(
-            (node) => ({ name: node.name, color: node.color, frameSates: Array(this.frameCount.length).fill(0) })
+            (node) => ({ name: node.name, color: node.color, frameSates: Array(this.frameCount).fill(0) })
         );
     }
 
@@ -114,12 +139,27 @@ export class AppComponent implements AfterViewInit {
     }
 
     saveData() {
-        const now = new Date();
-        saveAs(
-            new Blob([JSON.stringify({ frames: this.frameData })], {
-                type: 'application/json'
-            }),
-            `frames.json`
-        );
+        // saveAs(
+        //     new Blob([JSON.stringify({ frames: this.frameData })], {
+        //         type: 'application/json'
+        //     }),
+        //     `frames.json`
+        // );
+        this.file.saveFrames({ frames: this.frameData });
+    }
+
+    onMosueDown(event: MouseEvent, frame) {
+        this.isDragging = true;
+        console.log(frame);
+    }
+
+    onMouseMove(event: MouseEvent, frame) {
+        if (this.isDragging) {
+            console.log(frame);
+        }
+    }
+
+    onMouseUp(event: MouseEvent, frame) {
+        console.log(frame);
     }
 }

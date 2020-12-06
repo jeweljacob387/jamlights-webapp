@@ -1,19 +1,26 @@
-<button (click)="wave.play()">Play</button>
-<button (click)="wave.pause()">Pause</button>
-<button (click)="wave.stop()">Stop</button>
-<button (click)='saveData()'>Save</button>
-{{duration}}
+<!-- {{duration}}
 <br />
-{{frameCount?.length}}
+{{frameCount?.length}} -->
 <div class="container">
-  <div id="waveform"></div>
-  <div id="wave-timeline"></div>
-  <div *ngFor="let group of frameData; let groupindex = index" class="channels">
-    <div *ngFor="let channel of group.nodes; let channelIndex = index" class="channel" [ngStyle]="{'background-color': channel.color}">
-      <div *ngFor="let frame of channel.frameSates; let index = index" class="frame" [ngClass]="{'selected': frame}"
-        [ngStyle]="{'width': frameWidth+'px'}" (click)="onFrameClick(index, channelIndex, groupindex)">
-
-      </div>
+    <div class="actions-container">
+        <button *ngIf="!playing; else pause" (click)="wave.play()">Play</button>
+        <ng-template #pause>
+            <button (click)="wave.pause()">Pause</button>
+        </ng-template>
+        <button (click)="wave.stop()">Stop</button>
+        <button (click)='saveData()'>Save</button>
+        <button (click)="createFrameData()">Clear All</button>
     </div>
-  </div>
+    <div id="waveform"></div>
+    <div id="wave-timeline"></div>
+    <div *ngFor="let group of frameData; let groupindex = index" class="channels">
+        <div *ngFor="let channel of group.nodes; let channelIndex = index" class="channel"
+            [ngStyle]="{'background-color': channel.color}">
+            <div *ngFor="let frame of channel.frameSates; let index = index" class="frame"
+                [ngClass]="{'selected': frame}" [ngStyle]="{'width': frameWidth+'px'}"
+                (click)="onFrameClick(index, channelIndex, groupindex)">
+                &nbsp;
+            </div>
+        </div>
+    </div>
 </div>
