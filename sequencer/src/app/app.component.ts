@@ -5,6 +5,7 @@ import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import { groups, Channel } from 'src/assets/configs/channels.config';
 import { FileServiceService } from './file-service.service';
 import { FrameData } from './app.module';
+import { StateTypeEnum } from './state-type.enum';
 
 @Component({
     selector: 'app-root',
@@ -15,6 +16,7 @@ import { FrameData } from './app.module';
 export class AppComponent implements AfterViewInit {
     wave: WaveSurfer = null;
     url = 'assets/audiofiles/audio.mp3';
+    stateType = StateTypeEnum;
 
     duration: number;
     frameCount: number;
@@ -28,6 +30,7 @@ export class AppComponent implements AfterViewInit {
     frameData: FrameData;
     isDragging: boolean;
     playing: boolean;
+    selectedState = StateTypeEnum.ON;
 
     constructor(
         private file: FileServiceService,
@@ -68,8 +71,6 @@ export class AppComponent implements AfterViewInit {
             this.duration = this.wave.getDuration();
             this.frameCount = Math.floor(this.duration * 1000 / 40);
             this.frameWidth = 12000 / this.frameCount;
-            // this.createFrameData();
-            // this.frameData = frames.frames;
         });
     }
 
@@ -87,7 +88,7 @@ export class AppComponent implements AfterViewInit {
                 this.wave = WaveSurfer.create({
                     container: '#waveform',
                     waveColor: 'violet',
-                    progressColor: 'purple',
+                    progressColor: 'green',
                     plugins: [
                         TimelinePlugin.create({
                             container: '#wave-timeline'
@@ -116,19 +117,40 @@ export class AppComponent implements AfterViewInit {
     }
 
     onFrameClick(clickedIndex, channelIndex, groupindex) {
+
         if (this.startIndex != null) {
+
             if (this.selectedChannelIndex !== channelIndex || this.selectedGroupIndex !== groupindex) {
                 this.selectedChannelIndex = null;
                 this.startIndex = null;
             } else {
                 const selectedFrameCount = Math.abs(clickedIndex - this.startIndex);
+                let framesToReplace = [];
+                switch (this.selectedState) {
+                    case StateTypeEnum.FADE_UP:
+                        framesToReplace = Array(selectedFrameCount + 1).fill(0).map(
+                            (_, index) => (index + 1) / (selectedFrameCount + 1) * 10
+                        );
+                        break;
+                    case StateTypeEnum.FADE_DOWN:
+                        framesToReplace = Array(selectedFrameCount + 1).fill(0).map(
+                            (_, index) => (1 - (index + 1) / (selectedFrameCount + 1)) * 10
+                        );
+                        break;
+                    case StateTypeEnum.ON:
+                    case StateTypeEnum.OFF:
+                        framesToReplace = Array(selectedFrameCount + 1).fill(this.selectedState ? 10 : 0);
+                        break;
+                    default:
+                        break;
+                }
+
                 this.frameData[groupindex].nodes[channelIndex].frameSates.splice(
                     this.startIndex > clickedIndex ? clickedIndex : this.startIndex,
                     selectedFrameCount + 1,
-                    ...Array(selectedFrameCount + 1).fill(10)
+                    ...framesToReplace
                 );
                 console.log(`Duration is ${selectedFrameCount * 20} ms`);
-
                 this.startIndex = null;
             }
         } else {

@@ -5,11 +5,23 @@
         position: sticky;
         top: 0;
         left: 0;
-        display: inline-block;
-        button {
-            width: 100px;
-            height: 40px;
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+        .actions {
+            button {
+                width: 100px;
+                height: 40px;
+            }
         }
+        .state-type {
+            margin-right: 10px;
+            input+label {
+                margin-right: 10px;
+                font-size: larger;
+            }
+        }
+        
     }
 
     #waveform {
@@ -35,7 +47,7 @@
                 outline: 1px solid rgba(128, 128, 128, 0.178);
                 background-color: #fff;
                 &.selected {
-                    background-color: #0000;
+                    background-color: #000F;
                 }
             }
         }
