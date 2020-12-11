@@ -16,7 +16,7 @@ export class FileServiceService {
       (resolve) => {
         this.http.get<FrameData>(this.apiUrl).subscribe(
           (frames: any) => {
-            resolve(frames.frames);
+            resolve(frames.groups);
           }
         );
       }
