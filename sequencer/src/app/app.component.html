@@ -25,8 +25,8 @@
     </div>
     <div id="waveform"></div>
     <div id="wave-timeline"></div>
-    <div *ngFor="let group of frameData; let groupindex = index" class="channels">
-        <div *ngFor="let channel of group.nodes; let channelIndex = index" class="channel"
+    <div *ngFor="let group of frameData; let groupindex = index" class="group">
+        <div *ngFor="let channel of group.nodes; let channelIndex = index" class="node"
             [ngStyle]="{'background-color': channel.color}">
             <div *ngFor="let frame of channel.frameSates; let index = index" class="frame"
                 [ngStyle]="{'width': frameWidth+'px', 'background': 'linear-gradient(#FFF '+(1 - frame/10)*100+'%, '+'#0000 '+(1 - frame/10)*100+'%)'}"

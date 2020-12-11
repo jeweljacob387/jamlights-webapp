@@ -6,7 +6,14 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
-export type FrameData = { name: string; nodes: { name: string; color: string; frameSates: any[]; }[]; }[];
+export type FrameData = {
+  name: string;
+  nodes: {
+    name: string;
+    color: string;
+    frameSates: any[];
+  }[];
+}[];
 @NgModule({
   declarations: [
     AppComponent

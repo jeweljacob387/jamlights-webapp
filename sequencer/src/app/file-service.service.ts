@@ -23,8 +23,8 @@ export class FileServiceService {
     );
   }
 
-  saveFrames(frames: { frames: FrameData }) {
-    this.http.post(this.apiUrl, frames).subscribe(
+  saveFrames(groups: { groups: FrameData }) {
+    this.http.post(this.apiUrl, groups).subscribe(
       () => {
         console.log('saved');
 

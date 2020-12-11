@@ -2,7 +2,7 @@ import { AfterViewInit, Component, NgZone } from '@angular/core';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 
-import { groups, Channel } from 'src/assets/configs/channels.config';
+import { groups, Node } from 'src/assets/configs/channels.config';
 import { FileServiceService } from './file-service.service';
 import { FrameData } from './app.module';
 import { StateTypeEnum } from './state-type.enum';
@@ -110,9 +110,14 @@ export class AppComponent implements AfterViewInit {
         );
     }
 
-    createNodeData = (nodes: Array<Channel>) => {
+    createNodeData = (nodes: Array<Node>) => {
         return nodes.map(
-            (node) => ({ name: node.name, color: node.color, frameSates: Array(this.frameCount).fill(0) })
+            (node) => ({
+                name: node.name,
+                deviceIndex: node.deviceIndex,
+                color: node.color,
+                frameSates: Array(this.frameCount).fill(0)
+            })
         );
     }
 
@@ -167,7 +172,7 @@ export class AppComponent implements AfterViewInit {
         //     }),
         //     `frames.json`
         // );
-        this.file.saveFrames({ frames: this.frameData });
+        this.file.saveFrames({ groups: this.frameData });
     }
 
     onMosueDown(event: MouseEvent, frame) {
