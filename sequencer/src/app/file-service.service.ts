@@ -9,7 +9,7 @@ export class FileServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = 'http://localhost:4201/frames';
+  private apiUrl = 'http://192.168.43.173:4201/frames';
 
   getFrames() {
     return new Promise<FrameData>(
