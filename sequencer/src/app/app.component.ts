@@ -69,7 +69,7 @@ export class AppComponent implements AfterViewInit {
         this.getFrames();
         this.wave.on('ready', () => {
             this.duration = this.wave.getDuration();
-            this.frameCount = Math.floor(this.duration * 1000 / 40);
+            this.frameCount = Math.floor(this.duration * 1000 / 200);
             this.frameWidth = 12000 / this.frameCount;
         });
     }
