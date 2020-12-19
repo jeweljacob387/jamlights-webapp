@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone } from '@angular/core';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
 
@@ -31,10 +31,14 @@ export class AppComponent implements AfterViewInit {
     isDragging: boolean;
     playing: boolean;
     selectedState = StateTypeEnum.ON;
+    startX: number;
+    scrollLeft: any;
+    isMouseDown: boolean;
 
     constructor(
         private file: FileServiceService,
-        protected zone: NgZone
+        protected zone: NgZone,
+        private elem: ElementRef<HTMLDivElement>
     ) {
         zone.runOutsideAngular(
             () => {
@@ -69,8 +73,9 @@ export class AppComponent implements AfterViewInit {
         this.getFrames();
         this.wave.on('ready', () => {
             this.duration = this.wave.getDuration();
-            this.frameCount = Math.floor(this.duration * 1000 / 200);
+            this.frameCount = Math.floor(this.duration * 1000 / 100);
             this.frameWidth = 12000 / this.frameCount;
+            this.addGrabScrollListeners();
         });
     }
 
@@ -83,7 +88,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     createLoadCanvas() {
-        return new Promise(
+        return new Promise<void>(
             (resolve) => {
                 this.wave = WaveSurfer.create({
                     container: '#waveform',
@@ -175,18 +180,33 @@ export class AppComponent implements AfterViewInit {
         this.file.saveFrames({ groups: this.frameData });
     }
 
-    onMosueDown(event: MouseEvent, frame) {
-        this.isDragging = true;
-        console.log(frame);
+    addGrabScrollListeners() {
+        const slider = this.elem.nativeElement.querySelector('.wrapper');
+        this.zone.runOutsideAngular(
+            () => {
+                slider.addEventListener('mousedown', (e: MouseEvent) => {
+                    if (e.ctrlKey) {
+                        this.isMouseDown = true;
+                        this.startX = e.pageX - (slider as any).offsetLeft;
+                        this.scrollLeft = slider.scrollLeft;
+                    }
+                });
+                slider.addEventListener('mouseleave', () => {
+                    this.isMouseDown = false;
+                });
+                slider.addEventListener('mouseup', () => {
+                    this.isMouseDown = false;
+                });
+                slider.addEventListener('mousemove', (e: MouseEvent) => {
+                    if (!this.isMouseDown) { return; }
+                    e.preventDefault();
+                    const x = e.pageX - (slider as any).offsetLeft;
+                    const walk = (x - this.startX) * 3;
+                    slider.scrollLeft = this.scrollLeft - walk;
+                    console.log(walk);
+                });
+            }
+        );
     }
 
-    onMouseMove(event: MouseEvent, frame) {
-        if (this.isDragging) {
-            console.log(frame);
-        }
-    }
-
-    onMouseUp(event: MouseEvent, frame) {
-        console.log(frame);
-    }
 }

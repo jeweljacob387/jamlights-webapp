@@ -45,7 +45,7 @@
             justify-content: space-evenly;
             user-select: none;
             .frame { 
-                outline: 1px solid rgba(128, 128, 128, 0.178);
+                // outline: 1px solid rgba(128, 128, 128, 0.178);
                 background-color: #fff;
                 &.selected {
                     background-color: #000F;
@@ -53,4 +53,19 @@
             }
         }
     }
+}
+
+.vertical-bar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    border-right: 2px solid red;
+}
+
+.wrapper {
+    width: calc(100vw - 16px);
+    height: calc(100vh - 16px);
+    overflow-x: scroll;
+    position: relative;
 }
