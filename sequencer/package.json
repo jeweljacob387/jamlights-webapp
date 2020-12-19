@@ -5,7 +5,9 @@
     "ng": "ng",
     "startServer": "node app.js",
     "startApp": "ng serve",
-    "start": "run-p startApp startServer"
+    "serveBuildApp": "cd dist/sequencer/ && http-server -p 4200",
+    "start": "run-p startApp startServer",
+    "serveBuild": "run-p startServer serveBuildApp"
   },
   "private": true,
   "dependencies": {
