@@ -4,16 +4,56 @@ export const groups: Array<Group> = [
         color: '#FF0000',
         nodes: [
             {
-                name: 'channel4',
-                deviceIndex: 4,
-                color: '#00ff00'
+                name: 'channe 1',
+                deviceIndex: 1,
+                color: '#00000F'
             },
             {
-                name: 'channel5',
+                name: 'channe 2',
+                deviceIndex: 2,
+                color: '#0000F0'
+            },
+            {
+                name: 'channe 3',
+                deviceIndex: 3,
+                color: '#000F00'
+            },
+            {
+                name: 'channe 4',
+                deviceIndex: 4,
+                color: '#00F000'
+            },
+            {
+                name: 'channe 5',
                 deviceIndex: 5,
-                isPWM: true,
-                color: '#f00f0f'
-            }
+                color: '#0F0000'
+            },
+            {
+                name: 'channe 6',
+                deviceIndex: 6,
+                color: '#F00000'
+            },
+            {
+                name: 'channe 7',
+                deviceIndex: 7,
+                color: '#F0000F'
+            },
+            {
+                name: 'channe 8',
+                deviceIndex: 8,
+                color: '#F000F0'
+            },
+            {
+                name: 'channe 9',
+                deviceIndex: 9,
+                color: '#F00F00'
+            },
+            {
+                name: 'channe 10',
+                deviceIndex: 10,
+                color: '#F0F000'
+            },
+
         ]
     },
     {
@@ -21,22 +61,56 @@ export const groups: Array<Group> = [
         color: '#FF0000',
         nodes: [
             {
-                name: 'channel1',
+                name: 'channe 1',
                 deviceIndex: 1,
-                isPWM: true,
-                color: '#ff0000'
+                color: '#00000F'
             },
             {
-                name: 'channel2',
+                name: 'channe 2',
                 deviceIndex: 2,
-                color: '#ff0ff0'
+                color: '#0000F0'
             },
             {
-                name: 'channel5',
+                name: 'channe 3',
+                deviceIndex: 3,
+                color: '#000F00'
+            },
+            {
+                name: 'channe 4',
+                deviceIndex: 4,
+                color: '#00F000'
+            },
+            {
+                name: 'channe 5',
                 deviceIndex: 5,
-                isPWM: true,
-                color: '#f00f0f'
-            }
+                color: '#0F0000'
+            },
+            {
+                name: 'channe 6',
+                deviceIndex: 6,
+                color: '#F00000'
+            },
+            {
+                name: 'channe 7',
+                deviceIndex: 7,
+                color: '#F0000F'
+            },
+            {
+                name: 'channe 8',
+                deviceIndex: 8,
+                color: '#F000F0'
+            },
+            {
+                name: 'channe 9',
+                deviceIndex: 9,
+                color: '#F00F00'
+            },
+            {
+                name: 'channe 10',
+                deviceIndex: 10,
+                color: '#F0F000'
+            },
+
         ]
     },
     {
@@ -44,21 +118,56 @@ export const groups: Array<Group> = [
         color: '#FF0000',
         nodes: [
             {
-                name: 'channel3',
+                name: 'channe 1',
+                deviceIndex: 1,
+                color: '#00000F'
+            },
+            {
+                name: 'channe 2',
+                deviceIndex: 2,
+                color: '#0000F0'
+            },
+            {
+                name: 'channe 3',
                 deviceIndex: 3,
-                color: '#ffff00'
+                color: '#000F00'
             },
             {
-                name: 'channel4',
+                name: 'channe 4',
                 deviceIndex: 4,
-                color: '#00ff00'
+                color: '#00F000'
             },
             {
-                name: 'channel5',
+                name: 'channe 5',
                 deviceIndex: 5,
-                isPWM: true,
-                color: '#f00f0f'
-            }
+                color: '#0F0000'
+            },
+            {
+                name: 'channe 6',
+                deviceIndex: 6,
+                color: '#F00000'
+            },
+            {
+                name: 'channe 7',
+                deviceIndex: 7,
+                color: '#F0000F'
+            },
+            {
+                name: 'channe 8',
+                deviceIndex: 8,
+                color: '#F000F0'
+            },
+            {
+                name: 'channe 9',
+                deviceIndex: 9,
+                color: '#F00F00'
+            },
+            {
+                name: 'channe 10',
+                deviceIndex: 10,
+                color: '#F0F000'
+            },
+
         ]
     },
     {
@@ -66,44 +175,56 @@ export const groups: Array<Group> = [
         color: '#FF0000',
         nodes: [
             {
-                name: 'channel1',
+                name: 'channe 1',
                 deviceIndex: 1,
-                isPWM: true,
-                color: '#ff0000'
+                color: '#00000F'
             },
             {
-                name: 'channel4',
-                deviceIndex: 4,
-                color: '#00ff00'
-            },
-            {
-                name: 'channel5',
-                deviceIndex: 5,
-                isPWM: true,
-                color: '#f00f0f'
-            }
-        ]
-    },
-    {
-        name: 'rearRight',
-        color: '#FF0000',
-        nodes: [
-            {
-                name: 'channel1',
-                deviceIndex: 1,
-                isPWM: true,
-                color: '#ff0000'
-            },
-            {
-                name: 'channel2',
+                name: 'channe 2',
                 deviceIndex: 2,
-                color: '#ff0ff0'
+                color: '#0000F0'
             },
             {
-                name: 'channel3',
+                name: 'channe 3',
                 deviceIndex: 3,
-                color: '#ffff00'
-            }
+                color: '#000F00'
+            },
+            {
+                name: 'channe 4',
+                deviceIndex: 4,
+                color: '#00F000'
+            },
+            {
+                name: 'channe 5',
+                deviceIndex: 5,
+                color: '#0F0000'
+            },
+            {
+                name: 'channe 6',
+                deviceIndex: 6,
+                color: '#F00000'
+            },
+            {
+                name: 'channe 7',
+                deviceIndex: 7,
+                color: '#F0000F'
+            },
+            {
+                name: 'channe 8',
+                deviceIndex: 8,
+                color: '#F000F0'
+            },
+            {
+                name: 'channe 9',
+                deviceIndex: 9,
+                color: '#F00F00'
+            },
+            {
+                name: 'channe 10',
+                deviceIndex: 10,
+                color: '#F0F000'
+            },
+
         ]
     }
 ];

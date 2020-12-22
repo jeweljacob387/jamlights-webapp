@@ -1,6 +1,4 @@
 .container {
-    width: 12000px;
-
     .actions-container {
         position: sticky;
         top: 0;
@@ -45,12 +43,25 @@
             justify-content: space-evenly;
             user-select: none;
             .frame { 
-                // outline: 1px solid rgba(128, 128, 128, 0.178);
+                outline: 1px solid #0001;
                 background-color: #fff;
+                cursor: alias;
                 &.selected {
                     background-color: #000F;
                 }
             }
+            &.grabbed .frame {
+                cursor: text;
+            }
+        }
+    }
+
+    .title {
+        width: 90vw;
+        position: sticky;
+        left: 0;
+        &.group-name {
+            text-align: center;
         }
     }
 }

@@ -1,39 +1,44 @@
 <div class="wrapper">
-<div class="container">
-    <div class="actions-container">
-        <div class="actions">
-            <button *ngIf="!playing; else pause" (click)="wave.play()">Play</button>
-            <ng-template #pause>
-                <button (click)="wave.pause()">Pause</button>
-            </ng-template>
-            <button (click)="wave.stop()">Stop</button>
-            <button (click)='saveData()'>Save</button>
-            <button (click)="createFrameData()">Clear All</button>
-        </div>
-        <div class="state-type">
-            <input type="radio" name="state-type" id="ON" [value]="stateType.ON" [(ngModel)]="selectedState">
-            <label for="ON">ON</label>
-            <input type="radio" name="state-type" id="OFF" [value]="stateType.OFF" [(ngModel)]="selectedState">
-            <label for="OFF">OFF</label>
-            <input type="radio" name="state-type" id="FADE-UP" [value]="stateType.FADE_UP" [(ngModel)]="selectedState">
-            <label for="FADE-UP">FADE UP</label>
-            <input type="radio" name="state-type" id="FADE-DOWN" [value]="stateType.FADE_DOWN"
-                [(ngModel)]="selectedState">
-            <label for="FADE-DOWN">FADE DOWN</label>
-        </div>
-    </div>
-    <div id="waveform"></div>
-    <div id="wave-timeline"></div>
-    <div *ngFor="let group of frameData; let groupindex = index" class="group">
-        <div *ngFor="let channel of group.nodes; let channelIndex = index" class="node"
-            [ngStyle]="{'background-color': channel.color}">
-            <div *ngFor="let frame of channel.frameSates; let index = index" class="frame"
-                [ngStyle]="{'width': frameWidth+'px', 'background': 'linear-gradient(#FFF '+(1 - frame/10)*100+'%, '+'#0000 '+(1 - frame/10)*100+'%)'}"
-                (click)="!$event.ctrlKey && onFrameClick(index, channelIndex, groupindex)">
-                &nbsp;
+    <div class="container" [ngStyle]="{'width': canvasWidth+'px'}">
+        <div class="actions-container">
+            <div class="actions">
+                <button *ngIf="!playing; else pause" (click)="wave.play()">Play</button>
+                <ng-template #pause>
+                    <button (click)="wave.pause()">Pause</button>
+                </ng-template>
+                <button (click)="wave.stop()">Stop</button>
+                <button (click)='saveData()'>Save</button>
+                <button (click)="createFrameData()">Clear All</button>
+            </div>
+            <div class="state-type">
+                <input type="radio" name="state-type" id="ON" [value]="stateType.ON" [(ngModel)]="selectedState">
+                <label for="ON">ON</label>
+                <input type="radio" name="state-type" id="OFF" [value]="stateType.OFF" [(ngModel)]="selectedState">
+                <label for="OFF">OFF</label>
+                <input type="radio" name="state-type" id="FADE-UP" [value]="stateType.FADE_UP"
+                    [(ngModel)]="selectedState">
+                <label for="FADE-UP">FADE UP</label>
+                <input type="radio" name="state-type" id="FADE-DOWN" [value]="stateType.FADE_DOWN"
+                    [(ngModel)]="selectedState">
+                <label for="FADE-DOWN">FADE DOWN</label>
             </div>
         </div>
+        <div id="waveform"></div>
+        <div id="wave-timeline"></div>
+        <div *ngFor="let group of frameData; let groupindex = index" class="group">
+            <div class="title group-name">{{group.name}}</div>
+            <ng-container *ngFor="let channel of group.nodes; let channelIndex = index">
+                <div class="title">{{channel.name}}</div>
+                <div class="node" [ngStyle]="{'background-color': channel.color}"
+                    [ngClass]="{'grabbed': startIndex != null && selectedChannelIndex === channelIndex}">
+                    <div *ngFor="let frame of channel.frameSates; let index = index" class="frame"
+                        [ngStyle]="{'width': frameWidth+'px', 'background': 'linear-gradient(#FFF '+(1 - frame/10)*100+'%, '+'#0000 '+(1 - frame/10)*100+'%)'}"
+                        (click)="!$event.ctrlKey && onFrameClick(index, channelIndex, groupindex)">
+                        &nbsp;
+                    </div>
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
-<div class="vertical-bar"></div>
+    <div class="vertical-bar"></div>
 </div>

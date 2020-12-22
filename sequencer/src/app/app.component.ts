@@ -35,8 +35,11 @@ export class AppComponent implements AfterViewInit {
     scrollLeft: any;
     isMouseDown: boolean;
 
+    canvasWidth = 50000; // in px
+    frameDuration = 50; // in ms
+
     constructor(
-        private file: FileServiceService,
+        public file: FileServiceService,
         protected zone: NgZone,
         private elem: ElementRef<HTMLDivElement>
     ) {
@@ -68,13 +71,18 @@ export class AppComponent implements AfterViewInit {
                 }
             );
         }
-        this.wave.on('pause', () => { this.playing = false; });
-        this.wave.on('play', () => { this.playing = true; });
+        this.wave.on('pause', () => {
+            this.playing = false;
+        });
+        // this.wave.on('play', () => {
+        //     this.playing = true;
+        //     this.file.playFile();
+        // });
         this.getFrames();
         this.wave.on('ready', () => {
             this.duration = this.wave.getDuration();
-            this.frameCount = Math.floor(this.duration * 1000 / 100);
-            this.frameWidth = 12000 / this.frameCount;
+            this.frameCount = Math.floor(this.duration * 1000 / this.frameDuration);
+            this.frameWidth = this.canvasWidth / this.frameCount;
             this.addGrabScrollListeners();
         });
     }

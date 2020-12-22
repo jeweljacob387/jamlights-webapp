@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "startServer": "node app.js",
-    "startApp": "ng serve",
-    "serveBuildApp": "cd dist/sequencer/ && http-server -p 4200",
-    "start": "run-p startApp startServer",
+    "start": "ng serve",
     "serveBuild": "run-p startServer serveBuildApp"
   },
   "private": true,
